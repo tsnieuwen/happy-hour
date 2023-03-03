@@ -25,4 +25,23 @@ module.exports = {
     },
     ...knexSnakeCaseMappers,
   },
+  test: {
+    client: 'postgresql',
+    connection: {
+      database: 'happy_hour_test',
+      user: PG_USER,
+      password: PG_PASSWORD
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    },
+    seeds: {
+      directory: './seeds'
+    },
+    ...knexSnakeCaseMappers,
+  },
 };
