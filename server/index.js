@@ -1,11 +1,8 @@
-const express = require('express');
-const restaurantRouter = require('./routers/restaurantRouter');
-
-const app = express();
+const app = require('./app');
+// const setupDb = require('../db/dbSetup');
 const port = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use(restaurantRouter);
+// setupDb();
 
 app.listen(port, () => {
   console.log(`Server is up on port ${port}`);

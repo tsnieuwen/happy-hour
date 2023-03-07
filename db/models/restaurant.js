@@ -1,4 +1,4 @@
-const { Model } = require('objection ');
+const { Model } = require('objection');
 const Deal = require('./deal');
 
 class Restaurant extends Model {
@@ -18,6 +18,7 @@ class Restaurant extends Model {
       }
     }
   }
+
 }
 
 module.exports = Restaurant;
