@@ -35,16 +35,26 @@ const getRestaurant = async (req, res, next) => {
   }
 }
 
-// const updateRestaurant = async (req, res, next) => {
-//   try{
-//     if (!checkUpdateParams(Object.keys(req.body))) throw new Error('Invalid update property provided');
-//     if (!Object.keys(req.body).length) throw new Error('Please provide valid update');
-//     const restaurant = await Restaurant.query().findById(req.params.id).patch(req.body);
-//     res.status(200).send({status: 'Success'});
-//   } catch(err) {
-//     res.status(400).send({ Err: err.message} )
-//   }
-// }
+const updateRestaurant = async (req, res, next) => {
+  try{
+    //get restaurant being updated
+    const restaurant = await Restaurant.query().findById(req.params.id);
+    if (!restaurant) throw new Error('Restaurant not found');
+
+    //update restaurant properities being updated
+    if (req.body.name) restaurant.name = req.body.name;
+    if (req.body.neighborhood) restaurant.neighborhood = req.body.neighborhood;
+
+    //run checkExistingRestaurants on restaurantobject
+    const existingRestaurants = await checkExistingRestaurants(restaurant)
+    if (existingRestaurants[0] && existingRestaurants[0].id !== restaurant.id) throw new Error('Restaurant already in database');
+    
+    const updatedRestaurant = await Restaurant.query().patchAndFetchById(restaurant.id, req.body);
+    res.status(200).send({ restaurant: {...updatedRestaurant}, update: 'Successful'});
+  } catch(err) {
+    res.status(400).send({ error: err.message} )
+  }
+}
 
 // const deleteRestaurant = async (req, res, next) => {
 
@@ -54,6 +64,6 @@ module.exports = {
   createRestaurant,
   getRestaurants,
   getRestaurant,
-//   updateRestaurant,
+  updateRestaurant,
 //   deleteRestaurant
 }
