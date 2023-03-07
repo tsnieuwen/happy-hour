@@ -25,15 +25,15 @@ const getRestaurants = async (req, res, next) => {
   }
 }
 
-// const getRestaurant = async (req, res, next) => {
-//   try {
-//     const restaurant = await Restaurant.query().findById(req.params.id);
-//     if (!restaurant) throw new Error('Restaurant not found');
-//     res.status(200).send(restaurant);
-//   } catch(err) {
-//     res.status(404).send({ Err: err.message })
-//   }
-// }
+const getRestaurant = async (req, res, next) => {
+  try {
+    const restaurant = await Restaurant.query().findById(req.params.id);
+    if (!restaurant) throw new Error('Restaurant not found');
+    res.status(200).send(restaurant);
+  } catch(err) {
+    res.status(404).send({ error: err.message })
+  }
+}
 
 // const updateRestaurant = async (req, res, next) => {
 //   try{
@@ -52,8 +52,8 @@ const getRestaurants = async (req, res, next) => {
 
 module.exports = {
   createRestaurant,
-  getRestaurants
-//   getRestaurant,
+  getRestaurants,
+  getRestaurant,
 //   updateRestaurant,
 //   deleteRestaurant
 }

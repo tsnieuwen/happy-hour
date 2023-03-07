@@ -4,6 +4,7 @@ const { disconnectDb } = require("../../../db/dbSetup");
 const Restaurant = require("../../../db/models/restaurant");
 
 describe("/restaurants", () => {
+  let singleRestaurant;
   afterAll(async () => {
     await Restaurant.query().delete();
     disconnectDb();
@@ -67,12 +68,34 @@ describe("/restaurants", () => {
         const res = await supertest(app)
           .get("/restaurants")
           .expect(200);
+        singleRestaurant = res.body[0];
         expect(res.body.length).toBeGreaterThan(0);
       })
     })
 
     describe('sad paths', () => {
 
+    })
+  })
+
+  describe('GET /restaurants/:id', () => {
+    describe('happy paths', () => {
+      it('retrieves single restaurant', async () => {
+        //TODO: revisit, this test is dependent on GET /restaurants test
+        const res = await supertest(app)
+          .get(`/restaurants/${singleRestaurant.id}`)
+          .expect(200);
+        expect(res.body).toEqual(singleRestaurant);
+      })
+    })
+
+    describe('sad paths', () => {
+      it('throws error if bad restaurant id', async () => {
+        const res = await supertest(app)
+        .get('/restaurants/99999')
+        .expect(404);
+      expect(res.body.error).toEqual('Restaurant not found')
+      })
     })
   })
 });
