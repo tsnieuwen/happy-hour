@@ -16,14 +16,14 @@ const createRestaurant = async (req, res, next) => {
   }
 }
 
-// const getRestaurants = async (req, res, next) => {
-//   try {
-//     const restaurants = await Restaurant.query();
-//     res.status(200).send(restaurants);
-//   } catch(err) {
-//     res.status(500).send({error: err} )
-//   }
-// }
+const getRestaurants = async (req, res, next) => {
+  try {
+    const restaurants = await Restaurant.query();
+    res.status(200).send(restaurants);
+  } catch(err) {
+    res.status(500).send({error: err.message} )
+  }
+}
 
 // const getRestaurant = async (req, res, next) => {
 //   try {
@@ -51,8 +51,8 @@ const createRestaurant = async (req, res, next) => {
 // }
 
 module.exports = {
-  createRestaurant
-//   getRestaurants,
+  createRestaurant,
+  getRestaurants
 //   getRestaurant,
 //   updateRestaurant,
 //   deleteRestaurant

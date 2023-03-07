@@ -56,9 +56,23 @@ describe("/restaurants", () => {
           .post("/restaurants")
           .send(body)
           .expect(400);
-          const apples = 'apples';
         expect(res.body.error).toEqual('missing property: name,has_patio');
       });
     });
   });
+
+  describe('GET /restaurants', () =>{
+    describe('happy paths', () => {
+      it('Should retrieve all restaurants successfully', async () => {
+        const res = await supertest(app)
+          .get("/restaurants")
+          .expect(200);
+        expect(res.body.length).toBeGreaterThan(0);
+      })
+    })
+
+    describe('sad paths', () => {
+
+    })
+  })
 });
