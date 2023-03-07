@@ -1,14 +1,18 @@
 const Restaurant = require('../../db/models/restaurant');
 const { checkExistingRestaurants } = require('../helpers/checkExistingRestaurants');
+const { validCreateBody } = require('../helpers/validCreateBody');
+
 
 const createRestaurant = async (req, res, next) => {
   try {
+    const bodyCheck = validCreateBody(req.body);
+    if (bodyCheck.length) throw new Error(`missing property: ${bodyCheck}`);
     const existingRestaurants = await checkExistingRestaurants(req.body)
     if (existingRestaurants.length > 0) throw new Error('Restaurant already in database');
     const restaurant = await Restaurant.query().insert(req.body);
     res.status(201).send(restaurant)
   } catch(err) {
-    res.status(400).send( {error: err} )
+    res.status(400).send({ error: err.message })
   }
 }
 

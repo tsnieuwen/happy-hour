@@ -13,7 +13,7 @@ describe("/restaurants", () => {
     describe("happy path", () => {
       it("Should create a restaurant when valid request body is sent", async () => {
         const body = {
-          name: "Machete",
+          name: "Bojos",
           has_patio: true,
           cuisine: "italian/pizza",
           neighborhood: "LoDo",
@@ -24,28 +24,41 @@ describe("/restaurants", () => {
           .post("/restaurants")
           .send(body)
           .expect(201);
-
         expect(res.body).toEqual({ ...body, id: res.body.id });
       });
     });
 
-    // describe("sad path", () => {
-    //   it("Should throw error if restaurant already exists in db", async () => {
-    //     const body = {
-    //       name: "Homegrown Tap & Dough",
-    //       has_patio: true,
-    //       cuisine: "italian/pizza",
-    //       neighborhood: "Olde Town",
-    //       lat: 39.79,
-    //       long: -105.08,
-    //     };
-    //     const res = await supertest(app)
-    //       .post("/restaurants")
-    //       .send(body)
-    //       .expect(400);
+    describe("sad path", () => {
+      it("Should throw error if restaurant already exists in db", async () => {
+        const body = {
+          name: "Machete",
+          has_patio: true,
+          cuisine: "italian/pizza",
+          neighborhood: "LoDo",
+          lat: 39.79,
+          long: -105.08
+        };
+        const res = await supertest(app)
+          .post("/restaurants")
+          .send(body)
+          .expect(400);
+        expect(res.body.error).toEqual('Restaurant already in database');
+      });
 
-    //     expect(res.body).toEqual({ ...body, id: res.body.id });
-    //   });
-    // });
+      it("Should throw error when missing properties", async () => {
+        const body = {
+          cuisine: "italian/pizza",
+          neighborhood: "LoDo",
+          lat: 39.79,
+          long: -105.08,
+        };
+        const res = await supertest(app)
+          .post("/restaurants")
+          .send(body)
+          .expect(400);
+          const apples = 'apples';
+        expect(res.body.error).toEqual('missing property: name,has_patio');
+      });
+    });
   });
 });
