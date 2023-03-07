@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run seed && CONFIG_FRAGMENT=test jest --coverage",
+    "test-integration": "npm run seed && CONFIG_FRAGMENT=test jest test/integration --coverage --testTimeout=150000",
     "test-unit": "npm run seed && CONFIG_FRAGMENT=test jest test/unit --coverage",
     "dev": "nodemon server/index.js",
     "migrate": "knex migrate:latest --knexfile ./db/knexfile.js",

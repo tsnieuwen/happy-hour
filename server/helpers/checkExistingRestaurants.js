@@ -1,5 +1,4 @@
 const Restaurant = require('../../db/models/restaurant');
-const { raw } = require('objection');
 
 const checkExistingRestaurants = async (body) =>{
    return await Restaurant.query()
