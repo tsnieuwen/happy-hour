@@ -5,7 +5,7 @@ const { getRestaurants, getRestaurant, createRestaurant, updateRestaurant, delet
 router.get('/restaurants', getRestaurants);
 router.get('/restaurants/:id', getRestaurant);
 router.post('/restaurants', createRestaurant);
-// router.patch('/restaurants/:id', updateRestaurant);
+router.patch('/restaurants/:id', updateRestaurant);
 // router.delete('/restaurants/:id', deleteRestaurant);
 
 module.exports = router; 

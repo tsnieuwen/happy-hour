@@ -98,4 +98,49 @@ describe("/restaurants", () => {
       })
     })
   })
+
+  describe('PATCH /restaurants/:id', () => {
+    describe('happy path', () => {
+      it('can update one property', async () => {
+        const updateBody = {
+          lat: 100
+        }
+        const res = await supertest(app)
+          .patch(`/restaurants/${singleRestaurant.id}`)
+          .send(updateBody)
+          .expect(200)
+        expect(res.body.restaurant.lat).toEqual(updateBody.lat);
+        expect(res.body.update).toEqual('Successful');
+      })
+
+      it('can update multiple properties', async () => {
+        const updateBody = {
+          lat: 100,
+          name: "Asian Pepper II"
+        }
+        const res = await supertest(app)
+          .patch(`/restaurants/${singleRestaurant.id}`)
+          .send(updateBody)
+          .expect(200)
+        expect(res.body.restaurant.name).toEqual(updateBody.name);
+        expect(res.body.restaurant.lat).toEqual(updateBody.lat);
+        expect(res.body.update).toEqual('Successful');
+      })
+    })
+
+    describe('sad path', () => {
+      it('Throws error when updating to a existing restaurant', async () => {
+        const updateBody = {
+          name: "Machete",
+          neighborhood: "LoDo"
+        }
+        const res = await supertest(app)
+          .patch(`/restaurants/${singleRestaurant.id}`)
+          .send(updateBody)
+          .expect(400)
+          
+        expect(res.body.error).toEqual('Restaurant already in database');
+      })
+    })
+  })
 });
