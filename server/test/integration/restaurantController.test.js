@@ -143,4 +143,27 @@ describe("/restaurants", () => {
       })
     })
   })
+
+  describe('DELETE /restaurants/:id', () => {
+    describe('happy path', () => {
+      it('Deletes a restaurant successfully', async () => {
+        const res = await supertest(app)
+          .delete(`/restaurants/${singleRestaurant.id}`)
+          .expect(200)
+        
+        const isDeleted = await Restaurant.query().findById(singleRestaurant.id)
+        expect(isDeleted).not.toBeDefined();
+      })
+    })
+
+    describe('sad path', () => {
+      it('Throw error when restaurant not found', async () => {
+        const res = await supertest(app)
+          .delete(`/restaurants/99999`)
+          .expect(400)
+        
+        expect(res.body.error).toEqual('Restaurant not found')
+      })
+    })
+  })
 });

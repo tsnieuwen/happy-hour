@@ -4,6 +4,7 @@ const { validCreateBody } = require('../helpers/validCreateBody');
 
 
 const createRestaurant = async (req, res, next) => {
+  //TODO: refactor this
   try {
     const bodyCheck = validCreateBody(req.body);
     if (bodyCheck.length) throw new Error(`missing property: ${bodyCheck}`);
@@ -36,6 +37,7 @@ const getRestaurant = async (req, res, next) => {
 }
 
 const updateRestaurant = async (req, res, next) => {
+  //TODO: refactor this
   try{
     //get restaurant being updated
     const restaurant = await Restaurant.query().findById(req.params.id);
@@ -56,14 +58,22 @@ const updateRestaurant = async (req, res, next) => {
   }
 }
 
-// const deleteRestaurant = async (req, res, next) => {
-
-// }
+const deleteRestaurant = async (req, res, next) => {
+  //TODO: revisit objection delete and refactor
+  try {
+    const restaurant = await Restaurant.query().findById(req.params.id);
+    if (!restaurant) throw new Error('Restaurant not found')
+    await Restaurant.query().deleteById(req.params.id)
+    res.status(200).send('Restaurant has been removed')
+  } catch (err) {
+    res.status(400).send( {error: err.message} )
+  }
+}
 
 module.exports = {
   createRestaurant,
   getRestaurants,
   getRestaurant,
   updateRestaurant,
-//   deleteRestaurant
+  deleteRestaurant
 }
