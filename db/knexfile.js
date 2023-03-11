@@ -1,3 +1,4 @@
+
 require('dotenv').config();
 const { knexSnakeCaseMappers } = require('objection');
 const { PG_USER, PG_PASSWORD } = process.env;
@@ -18,7 +19,8 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'knex_migrations',
+      directory: path.join(__dirname, './db/migrations')
     },
     seeds: {
       directory: './seeds'
