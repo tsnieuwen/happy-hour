@@ -1,4 +1,4 @@
-const { checkExistingRestaurants } = require('../../helpers/checkExistingRestaurants');
+const { checkExistingRestaurants } = require('../../helpers/restaurants/checkExistingRestaurants');
 const { setupDb, disconnectDb } = require('../../../db/dbSetup');
 const Restaurant = require('../../../db/models/restaurant')
 

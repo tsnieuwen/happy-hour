@@ -17,8 +17,8 @@ exports.up = function(knex) {
   .createTable('deal', (table) => {
     table.increments();
     table.string('item').notNullable();
-    table.decimal('price', 2, 2);
-    table.decimal('percent_off', 2, 2);
+    table.decimal('price', 4, 2);
+    table.decimal('percent_off', 3, 2);
     table.string('description');
     table.time('start_time').notNullable();
     table.time('end_time').notNullable();
@@ -37,7 +37,3 @@ exports.down = function(knex) {
     .dropTableIfExists('restaurant')
     .dropTableIfExists('deal')
 };
-
-// Deal Columns:
-// - restaurant_id
-// - timestamps

@@ -1,4 +1,4 @@
-const { validCreateBody } = require('../../helpers/validCreateBody');
+const { validRestaurantBody } = require('../../helpers/restaurants/validRestaurantBody');
 
 describe('validCreateBody tests', () => {
 
@@ -10,7 +10,7 @@ describe('validCreateBody tests', () => {
       lat: 12.2,
       long: 68.5
     };
-    const missingProperties = validCreateBody(body);
+    const missingProperties = validRestaurantBody(body);
     expect(missingProperties[0]).toEqual('name');
   })
 
@@ -21,7 +21,7 @@ describe('validCreateBody tests', () => {
       lat: 12.2,
       long: 68.5
     };
-    const missingProperties = validCreateBody(body);
+    const missingProperties = validRestaurantBody(body);
     expect(missingProperties[0]).toEqual('name');
     expect(missingProperties[1]).toEqual('has_patio');
   })
@@ -35,7 +35,7 @@ describe('validCreateBody tests', () => {
       lat: 12.2,
       long: 68.5
     };
-    const missingProperties = validCreateBody(body);
+    const missingProperties = validRestaurantBody(body);
     expect(missingProperties.length).toEqual(0);
   })
 })
