@@ -1,4 +1,4 @@
-const validCreateBody = (body) => {
+const validRestaurantBody = (body) => {
   const validProperties = [
     "name", 
     "has_patio", 
@@ -19,5 +19,5 @@ const validCreateBody = (body) => {
 }
 
 module.exports = {
-  validCreateBody
+  validRestaurantBody
 }

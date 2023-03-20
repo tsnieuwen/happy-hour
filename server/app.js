@@ -1,5 +1,6 @@
 const express = require('express');
-const { restaurantRouter, dealRouter } = require('./routers');
+const restaurantRouter = require('./routers/restaurantRouter');
+const dealRouter = require('./routers/dealRouter');
 const { setupDb } = require('../db/dbSetup');
 const app = express();
 

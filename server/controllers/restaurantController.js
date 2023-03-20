@@ -1,12 +1,12 @@
 const Restaurant = require('../../db/models/restaurant');
-const { checkExistingRestaurants } = require('../helpers/checkExistingRestaurants');
-const { validCreateBody } = require('../helpers/validCreateBody');
+const { checkExistingRestaurants } = require('../helpers/restaurants/checkExistingRestaurants');
+const { validRestaurantBody } = require('../helpers/restaurants/validRestaurantBody');
 
 
 const createRestaurant = async (req, res, next) => {
   //TODO: refactor this
   try {
-    const bodyCheck = validCreateBody(req.body);
+    const bodyCheck = validRestaurantBody(req.body);
     if (bodyCheck.length) throw new Error(`missing property: ${bodyCheck}`);
     const existingRestaurants = await checkExistingRestaurants(req.body)
     if (existingRestaurants.length > 0) throw new Error('Restaurant already in database');

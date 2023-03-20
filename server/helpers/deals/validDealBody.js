@@ -1,9 +1,5 @@
-const validCreateBody = (body) => {
-  try{
+const validDealBody = (body) => {
 
-  }catch(err){
-
-  }
   const validProperties = [
     "item",
     "price",
@@ -12,7 +8,6 @@ const validCreateBody = (body) => {
     "start_time",
     "end_time",
     "weekday",
-    "category",
     "restaurant_id"
   ];
 
@@ -27,5 +22,5 @@ const validCreateBody = (body) => {
 }
 
 module.exports = {
-  validCreateBody
+  validDealBody
 }
